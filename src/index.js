@@ -1,5 +1,3 @@
-import "./styles.css";
-
 //Date and Time
 let now = new Date();
 
