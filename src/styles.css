@@ -60,6 +60,7 @@ hr {
     color: rgb(23, 172, 147);
     font-size: 30px;
     font-weight: bold;
+    text-transform: capitalize;
 }
 
 .subheading {
@@ -73,24 +74,30 @@ hr {
     color: rgb(29, 119, 192);
 }
 
+.col-12 {
+    padding-right: 0;
+}
+
 .tempUnits {
     font-size: 12px;
     position: relative;
     top: -16px;
+    left: -5px;
 }
 
 a:link {
     color: rgb(29, 119, 192);
 }
 
-.dateTime {
+.lastUpdated {
+    color: rgb(23, 172, 147);
     font-size: 12px;
 }
 
-.suggestion {
+#suggestion {
     font-weight: bold;
     color: rgb(23, 172, 147);
-    font-size: 13px;
+    font-size: 12px;
 }
 
 .precipWind {
@@ -126,4 +133,8 @@ a:link {
     color: rgb(29, 119, 192);
     font-style: italic;
     font-size: 11px;
+}
+
+.footerLink {
+    color: rgb(23, 172, 147);
 }

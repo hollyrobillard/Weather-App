@@ -31,16 +31,29 @@ let month = months[now.getMonth()];
 let date = now.getDate();
 let hour = now.getHours();
 let min = now.getMinutes();
+let time = "";
 
-let dateTimeDisplay = document.querySelector(".dateTime");
-dateTimeDisplay.innerHTML = `${day}, ${month} ${date} ${hour}:${min}`;
+if (min < 10) {
+  min = "0" + min;
+} else {
+  min = min;
+}
+
+if (hour > 12) {
+  hour = hour-12;
+  let time = `${hour}:${min}pm`;
+  let dateTimeDisplay = document.querySelector(".dateTime");
+  dateTimeDisplay.innerHTML = `${day}, ${month} ${date} ${time}`;
+} else {
+  let time = `${hour}:${min}am`;
+  let dateTimeDisplay = document.querySelector(".dateTime");
+  dateTimeDisplay.innerHTML = ` ${day}, ${month} ${date} ${time}`;
+}
 
 //City Name, Temperature, Wind, and Humidity Update
 function cityUpdate(event) {
   event.preventDefault();
-  let newCityName = document.querySelector("#cityName");
-  let currentCityName = document.querySelector(".city");
-  currentCityName.innerHTML = newCityName.value;
+  document.querySelector(".city").innerHTML = document.querySelector("#cityName").value;
 }
 
 function cityWeatherData(event) {
@@ -53,15 +66,16 @@ function cityWeatherData(event) {
 }
 
 function showNewWeatherConditions(weatherData) {
-  let newTemp = Math.round(weatherData.data.main.temp);
-  let currentTemp = document.querySelector("#currentTemp");
-  currentTemp.innerHTML = `${newTemp}`;
-  let newWind = Math.round(weatherData.data.wind.speed);
-  let currentWind = document.querySelector("#currentWind");
-  currentWind.innerHTML = `${newWind}`;
-  let newHumidity = weatherData.data.main.humidity;
-  let currentHumidity = document.querySelector("#currentHumidity");
-  currentHumidity.innerHTML = `${newHumidity}`;
+  document.querySelector("#currentTemp").innerHTML = Math.round(weatherData.data.main.temp);
+  document.querySelector("#currentWind").innerHTML = Math.round(weatherData.data.wind.speed);
+  document.querySelector("#currentHumidity").innerHTML = weatherData.data.main.humidity;
+  document.querySelector("#weatherIcon").setAttribute("src", `https://openweathermap.org/img/wn/${weatherData.data.weather[0].icon}.png`);
+  document.querySelector("#weatherIcon").setAttribute("alt", weatherData.data.weather[0].description);
+  if (weatherData.data.weather[0].main === "Rain") {
+    document.querySelector("#suggestion").innerHTML = "Suggestion: Don't forget your umbrella today!";
+  } else {
+    document.querySelector("#suggestion").innerHTML = "Suggestion: Enjoy the day!";
+  } 
 }
 
 let newCity = document.querySelector("#city-search");
@@ -85,31 +99,35 @@ function currentCityWeatherData(position) {
 
 function showCurrentCityWeather(weatherData) {
   document.querySelector(".city").innerHTML = weatherData.data.name;
-  document.querySelector("#currentTemp").innerHTML = Math.round(
-    weatherData.data.main.temp
-  );
-  document.querySelector("#currentWind").innerHTML = Math.round(
-    weatherData.data.wind.speed
-  );
-    document.querySelector("#currentHumidity").innerHTML = 
-    weatherData.data.main.humidity;
+  document.querySelector("#currentTemp").innerHTML = Math.round(weatherData.data.main.temp);
+  document.querySelector("#currentWind").innerHTML = Math.round(weatherData.data.wind.speed);
+  document.querySelector("#currentHumidity").innerHTML = weatherData.data.main.humidity;
+  document.querySelector("#weatherIcon").setAttribute("src", `https://openweathermap.org/img/wn/${weatherData.data.weather[0].icon}.png`);
+  document.querySelector("#weatherIcon").setAttribute("alt", weatherData.data.weather[0].description);
+  if (weatherData.data.weather[0].main === "Rain") {
+    document.querySelector("#suggestion").innerHTML = "Suggestion: Don't forget your umbrella today!";
+  } else {
+    document.querySelector("#suggestion").innerHTML = "Suggestion: Enjoy the day!";
+  } 
 }
 
 let refreshCurrentCity = document.querySelector("#refresh-button");
 refreshCurrentCity.addEventListener("click", currentGeolocation);
 
 //Fahrenheight Celcius Switch
-function switchToCelcius(event) {
+function switchToCelcius(event, weatherData) {
   event.preventDefault();
-  let currentT = document.querySelector("#currentTemp");
-  let temperature = currentT.innerHTML;
+  let temperature = document.querySelector("#currentTemp").innerHTML;
   temperature = Number(temperature);
-  currentT.innerHTML = Math.round(((temperature - 32) * 5) / 9);
+  temperature = Math.round(((temperature - 32) * 5) / 9);
+  console.log(temperature)
 }
-function switchToFahrenheit(event) {
+
+function switchToFahrenheit(event, weatherData) {
   event.preventDefault();
-  let currentT = document.querySelector("#currentTemp");
-  currentT.innerHTML = 90;
+  document.querySelector("#currentTemp").innerHTML = Math.round(
+    weatherData.data.main.temp
+  );
 }
 
 let fahrenheit = document.querySelector("#fahrenheit");

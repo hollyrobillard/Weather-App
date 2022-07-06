@@ -37,11 +37,11 @@
           <p class="city">Miami</p>
           <p class="subheading">Currently</p>
           <div class="row">
-            <div class="col-4">
+            <div class="col-5">
               <div class="row">
                 <div class="col-12">
                   <div class="currentWeather">
-                    🌦
+                    <img id="weatherIcon" src="https://openweathermap.org/img/wn/10n.png" alt="light rain"></img>
                     <span id="currentTemp">90</span>
                     <span class="tempUnits">
                       <a href="#" id="fahrenheit">°F</a>
@@ -51,16 +51,11 @@
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-12">
-                  <div class="dateTime">Friday, June 10 12:00</div>
-                </div>
-              </div>
             </div>
-            <div class="col-8">
+            <div class="col-7">
               <div class="row">
                 <div class="col-12">
-                  <div class="suggestion">
+                  <div id="suggestion">
                     Suggestion: Don't forget your umbrella today!
                   </div>
                 </div>
@@ -79,6 +74,10 @@
                 </div>
               </div>
             </div>
+          </div>
+          <div class="lastUpdated">
+            Last Updated:
+            <div class="dateTime">Friday, June 10 12:00</div>
           </div>
           <br />
           <p class="subheading">This Week</p>
@@ -116,14 +115,24 @@
           </div>
           <br />
           <div class="subtext">
-            <a href="https://jazzy-dragon-89cbdc.netlify.app/">Site</a> Created
-            and Maintained by
-            <a href="https://www.linkedin.com/in/hollyrobillard/"
+            <a
+              href="https://jazzy-dragon-89cbdc.netlify.app/"
+              class="footerLink"
+              >Site</a
+            >
+            Created and Maintained by
+            <a
+              href="https://www.linkedin.com/in/hollyrobillard/"
+              class="footerLink"
               >Holly Robillard</a
             >
             <br />
             Open Source Code on
-            <a href="https://github.com/hollyrobillard/Weather-App">Github</a>
+            <a
+              href="https://github.com/hollyrobillard/Weather-App"
+              class="footerLink"
+              >Github</a
+            >
           </div>
         </div>
       </div>
