@@ -1,0 +1,129 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.card {
+    display: block;
+    margin: 20px auto;
+}
+
+.card-title {
+    text-align: center;
+    color: rgb(29, 119, 192);
+    font-weight: bold;
+}
+
+::placeholder {
+    color: black;
+    font-size: 13px;
+    padding-left: 10px;
+}
+
+.search {
+    background-color: rgb(29, 119, 192);
+    color: white;
+    border-radius: 4px;
+    font-size: small;
+    padding: 4px 10px;
+    border-color: rgb(29, 119, 192);
+}
+
+#city-search {
+    display: inline-block;
+}
+
+.refresh {
+    background-color: rgb(23, 172, 147);
+    color: white;
+    border-radius: 4px;
+    font-size: small;
+    padding: 4px 10px;
+    border-color: rgb(23, 172, 147);
+}
+
+.favorites {
+    font-weight: bold;
+}
+
+.col-2,
+.col-3 {
+    color: rgb(29, 119, 192);
+    font-size: 15px;
+}
+
+hr {
+    height: 5px;
+    border-top: 3px solid rgb(29, 119, 192);
+}
+
+.city {
+    color: rgb(23, 172, 147);
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.subheading {
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.currentWeather {
+    font-weight: bold;
+    font-size: 35px;
+    color: rgb(29, 119, 192);
+}
+
+.tempUnits {
+    font-size: 12px;
+    position: relative;
+    top: -16px;
+}
+
+a:link {
+    color: rgb(29, 119, 192);
+}
+
+.dateTime {
+    font-size: 12px;
+}
+
+.suggestion {
+    font-weight: bold;
+    color: rgb(23, 172, 147);
+    font-size: 13px;
+}
+
+.precipWind {
+    font-style: italic;
+    font-size: 11px;
+}
+
+.week {
+    color: rgb(23, 172, 147);
+    font-size: 15px;
+    text-align: center;
+}
+
+.emoji {
+    font-size: 40px;
+    text-align: center;
+    color: black;
+}
+
+.highsLowsTitle {
+    color: black;
+    font-size: 14px;
+    text-align: left;
+}
+
+.highsLows {
+    color: black;
+    font-size: 14px;
+    text-align: center;
+}
+
+.subtext {
+    color: rgb(29, 119, 192);
+    font-style: italic;
+    font-size: 11px;
+}
