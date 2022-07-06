@@ -35,7 +35,7 @@ let min = now.getMinutes();
 let dateTimeDisplay = document.querySelector(".dateTime");
 dateTimeDisplay.innerHTML = `${day}, ${month} ${date} ${hour}:${min}`;
 
-//City Name & Temperature Update
+//City Name, Temperature, Wind, and Humidity Update
 function cityUpdate(event) {
   event.preventDefault();
   let newCityName = document.querySelector("#cityName");
@@ -49,20 +49,26 @@ function cityWeatherData(event) {
   let units = "imperial";
   let apiKey = "c6f246d160dbacfbf41c2c13d3cb1b49";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${newCityName}&appid=${apiKey}&units=${units}`;
-  axios.get(apiUrl).then(showNewTemperature);
+  axios.get(apiUrl).then(showNewWeatherConditions);
 }
 
-function showNewTemperature(weatherData) {
+function showNewWeatherConditions(weatherData) {
   let newTemp = Math.round(weatherData.data.main.temp);
   let currentTemp = document.querySelector("#currentTemp");
   currentTemp.innerHTML = `${newTemp}`;
+  let newWind = Math.round(weatherData.data.wind.speed);
+  let currentWind = document.querySelector("#currentWind");
+  currentWind.innerHTML = `${newWind}`;
+  let newHumidity = weatherData.data.main.humidity;
+  let currentHumidity = document.querySelector("#currentHumidity");
+  currentHumidity.innerHTML = `${newHumidity}`;
 }
 
 let newCity = document.querySelector("#city-search");
 newCity.addEventListener("submit", cityUpdate);
 newCity.addEventListener("submit", cityWeatherData);
 
-//Current City Name & Temperature Update
+//Current City Name, Temperature, Wind, and Humidity Update
 function currentGeolocation(event) {
   event.preventDefault();
   navigator.geolocation.getCurrentPosition(currentCityWeatherData);
@@ -74,14 +80,19 @@ function currentCityWeatherData(position) {
   let units = "imperial";
   let apiKey = "c6f246d160dbacfbf41c2c13d3cb1b49";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${units}`;
-  axios.get(apiUrl).then(showCurrentCityTemp);
+  axios.get(apiUrl).then(showCurrentCityWeather);
 }
 
-function showCurrentCityTemp(weatherData) {
+function showCurrentCityWeather(weatherData) {
   document.querySelector(".city").innerHTML = weatherData.data.name;
   document.querySelector("#currentTemp").innerHTML = Math.round(
     weatherData.data.main.temp
   );
+  document.querySelector("#currentWind").innerHTML = Math.round(
+    weatherData.data.wind.speed
+  );
+    document.querySelector("#currentHumidity").innerHTML = 
+    weatherData.data.main.humidity;
 }
 
 let refreshCurrentCity = document.querySelector("#refresh-button");
