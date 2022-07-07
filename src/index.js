@@ -1,4 +1,4 @@
-//Date and Time
+//Initial Load Date and Time
 let now = new Date();
 
 let days = [
@@ -50,10 +50,61 @@ if (hour > 12) {
   dateTimeDisplay.innerHTML = ` ${day}, ${month} ${date} ${time}`;
 }
 
-//City Name, Temperature, Wind, and Humidity Update
+//Search Button Update
 function cityUpdate(event) {
   event.preventDefault();
   document.querySelector(".city").innerHTML = document.querySelector("#cityName").value;
+  
+  let now = new Date();
+
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ];
+  let day = days[now.getDay()];
+
+  let months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
+  let month = months[now.getMonth()];
+
+  let date = now.getDate();
+  let hour = now.getHours();
+  let min = now.getMinutes();
+  let time = "";
+
+  if (min < 10) {
+    min = "0" + min;
+  } else {
+    min = min;
+  }
+
+  if (hour > 12) {
+    hour = hour-12;
+    let time = `${hour}:${min}pm`;
+    let dateTimeDisplay = document.querySelector(".dateTime");
+    dateTimeDisplay.innerHTML = `${day}, ${month} ${date} ${time}`;
+  } else {
+    let time = `${hour}:${min}am`;
+    let dateTimeDisplay = document.querySelector(".dateTime");
+    dateTimeDisplay.innerHTML = ` ${day}, ${month} ${date} ${time}`;
+  }
 }
 
 function cityWeatherData(event) {
@@ -82,7 +133,10 @@ let newCity = document.querySelector("#city-search");
 newCity.addEventListener("submit", cityUpdate);
 newCity.addEventListener("submit", cityWeatherData);
 
-//Current City Name, Temperature, Wind, and Humidity Update
+
+
+
+//Refresh Current City Update
 function currentGeolocation(event) {
   event.preventDefault();
   navigator.geolocation.getCurrentPosition(currentCityWeatherData);
@@ -108,11 +162,66 @@ function showCurrentCityWeather(weatherData) {
     document.querySelector("#suggestion").innerHTML = "Suggestion: Don't forget your umbrella today!";
   } else {
     document.querySelector("#suggestion").innerHTML = "Suggestion: Enjoy the day!";
+  }
+
+  let now = new Date();
+
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ];
+  let day = days[now.getDay()];
+
+  let months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
+  let month = months[now.getMonth()];
+
+  let date = now.getDate();
+  let hour = now.getHours();
+  let min = now.getMinutes();
+  let time = "";
+
+  if (min < 10) {
+    min = "0" + min;
+  } else {
+    min = min;
+  }
+
+  if (hour > 12) {
+    hour = hour-12;
+    let time = `${hour}:${min}pm`;
+    let dateTimeDisplay = document.querySelector(".dateTime");
+    dateTimeDisplay.innerHTML = `${day}, ${month} ${date} ${time}`;
+  } else {
+    let time = `${hour}:${min}am`;
+    let dateTimeDisplay = document.querySelector(".dateTime");
+    dateTimeDisplay.innerHTML = ` ${day}, ${month} ${date} ${time}`;
   } 
+
 }
 
 let refreshCurrentCity = document.querySelector("#refresh-button");
 refreshCurrentCity.addEventListener("click", currentGeolocation);
+
+
+
 
 //Fahrenheight Celcius Switch
 function switchToCelcius(event, weatherData) {
