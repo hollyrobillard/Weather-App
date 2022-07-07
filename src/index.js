@@ -97,6 +97,7 @@ function showNewWeatherConditions(weatherData) {
   document.querySelector("#currentHumidity").innerHTML = weatherData.data.main.humidity;
   document.querySelector("#weatherIcon").setAttribute("src", `https://openweathermap.org/img/wn/${weatherData.data.weather[0].icon}.png`);
   document.querySelector("#weatherIcon").setAttribute("alt", weatherData.data.weather[0].description);
+  document.querySelector(".weatherDesc").innerHTML = weatherData.data.weather[0].description;
   if (weatherData.data.weather[0].main === "Rain") {
     document.querySelector("#suggestion").innerHTML = "Suggestion: Don't forget your umbrella today!";
   } else {
@@ -134,6 +135,7 @@ function showCurrentCityWeather(weatherData) {
   document.querySelector("#currentHumidity").innerHTML = weatherData.data.main.humidity;
   document.querySelector("#weatherIcon").setAttribute("src", `https://openweathermap.org/img/wn/${weatherData.data.weather[0].icon}.png`);
   document.querySelector("#weatherIcon").setAttribute("alt", weatherData.data.weather[0].description);
+  document.querySelector(".weatherDesc").innerHTML = weatherData.data.weather[0].description;
   if (weatherData.data.weather[0].main === "Rain") {
     document.querySelector("#suggestion").innerHTML = "Suggestion: Don't forget your umbrella today!";
   } else {

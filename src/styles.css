@@ -68,6 +68,12 @@ hr {
     font-size: 17px;
 }
 
+.weatherDesc {
+    font-size: 13px;
+    color: rgb(23, 172, 147);
+    text-transform: capitalize;
+}
+
 .currentWeather {
     font-weight: bold;
     font-size: 35px;
