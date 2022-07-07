@@ -84,8 +84,6 @@ function cityUpdate(event) {
 function cityWeatherData(event) {
   event.preventDefault();
   let newCityName = document.querySelector("#cityName").value;
-  let units = "imperial";
-  let apiKey = "c6f246d160dbacfbf41c2c13d3cb1b49";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${newCityName}&appid=${apiKey}&units=${units}`;
   axios.get(apiUrl).then(showNewWeatherConditions);
 }
@@ -103,7 +101,7 @@ function showNewWeatherConditions(weatherData) {
   } else {
     document.querySelector("#suggestion").innerHTML = "Suggestion: Enjoy the day!";
   } 
-  displayForecast();
+  getForecast(weatherData.data.coord);
 }
 
 let newCity = document.querySelector("#city-search");
@@ -122,8 +120,6 @@ function currentGeolocation(event) {
 function currentCityWeatherData(position) {
   let latitude = position.coords.latitude;
   let longitude = position.coords.longitude;
-  let units = "imperial";
-  let apiKey = "c6f246d160dbacfbf41c2c13d3cb1b49";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${units}`;
   axios.get(apiUrl).then(showCurrentCityWeather);
 }
@@ -143,7 +139,7 @@ function showCurrentCityWeather(weatherData) {
     document.querySelector("#suggestion").innerHTML = "Suggestion: Enjoy the day!";
   }
 
-  displayForecast();
+  getForecast(weatherData.data.coord);
 
   now = new Date();
   day = days[now.getDay()];
@@ -199,25 +195,52 @@ celcius.addEventListener("click", switchToCelcius);
 
 
 //Forecast
-function displayForecast() {
+function getForecast(coordinates) {
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=${units}`;
+  axios.get(apiUrl).then(displayForecast);
+}
+
+function forecastDay(timestamp){
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  return shortenedDays[day];
+}
+
+function displayForecast(response) {
+  let forecastInfo = response.data.daily;
   let forecast = document.querySelector("#forecast");
   
   let forecastHTML = `<br /><p class="subheading">This Week</p><div class="row">`;
-  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
 
-  days.forEach(function(day) {
+  forecastInfo.forEach(function(dailyForecast, index) {
+    if (index < 6) {
     forecastHTML =  forecastHTML + `
         <div class="col-2">
-          <div class = "forecastDate">${day}</div>
-          <img src = "https://openweathermap.org/img/wn/10n.png" alt="" width="42"/>
+          <div class = "forecastDate">${forecastDay(dailyForecast.dt)}</div>
+          <img src = "https://openweathermap.org/img/wn/${dailyForecast.weather[0].icon}.png" alt="" width="42"/>
           <div class="forecastTemp">
-            <span class="forecastTempMax"> 60° </span>
-            <span class="forecastTempMin"> 50° </span>
+            <span class="forecastTempMax"> ${Math.round(dailyForecast.temp.max)}°F </span>
+            <span class="forecastTempMin"> ${Math.round(dailyForecast.temp.min)}°F </span>
           </div>
         </div>
       `;
+    }
   })
 
      forecastHTML = forecastHTML + `</div>`
      forecast.innerHTML = forecastHTML;
 }
+
+
+//Global Variables
+let apiKey = "c6f246d160dbacfbf41c2c13d3cb1b49";
+let units = "imperial";
+let shortenedDays = [
+  "Sun",
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat"
+];
