@@ -202,7 +202,7 @@ celcius.addEventListener("click", switchToCelcius);
 function displayForecast() {
   let forecast = document.querySelector("#forecast");
   
-  let forecastHTML = `<div class="row">`;
+  let forecastHTML = `<br /><p class="subheading">This Week</p><div class="row">`;
   let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
 
   days.forEach(function(day) {
