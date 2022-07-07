@@ -1,6 +1,15 @@
-//Initial Load Date and Time
-let now = new Date();
-
+//Global Variables
+let apiKey = "c6f246d160dbacfbf41c2c13d3cb1b49";
+let units = "imperial";
+let shortenedDays = [
+  "Sun",
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat"
+];
 let days = [
   "Sunday",
   "Monday",
@@ -10,8 +19,6 @@ let days = [
   "Friday",
   "Saturday"
 ];
-let day = days[now.getDay()];
-
 let months = [
   "January",
   "February",
@@ -26,8 +33,12 @@ let months = [
   "November",
   "December"
 ];
-let month = months[now.getMonth()];
 
+//Initial Load Date and Time
+let now = new Date();
+
+let day = days[now.getDay()];
+let month = months[now.getMonth()];
 let date = now.getDate();
 let hour = now.getHours();
 let min = now.getMinutes();
@@ -56,9 +67,9 @@ function cityUpdate(event) {
   document.querySelector(".city").innerHTML = document.querySelector("#cityName").value;
   
   now = new Date();
-  day = days[now.getDay()];
-  lmonth = months[now.getMonth()];
 
+  day = days[now.getDay()];
+  month = months[now.getMonth()];
   date = now.getDate();
   hour = now.getHours();
   min = now.getMinutes();
@@ -96,8 +107,12 @@ function showNewWeatherConditions(weatherData) {
   document.querySelector("#weatherIcon").setAttribute("src", `https://openweathermap.org/img/wn/${weatherData.data.weather[0].icon}.png`);
   document.querySelector("#weatherIcon").setAttribute("alt", weatherData.data.weather[0].description);
   document.querySelector(".weatherDesc").innerHTML = weatherData.data.weather[0].description;
-  if (weatherData.data.weather[0].main === "Rain") {
+  if (weatherData.data.weather[0].main === "Rain" || weatherData.data.weather[0].main === "Thunderstorm" || weatherData.data.weather[0].main === "Drizzle") {
     document.querySelector("#suggestion").innerHTML = "Suggestion: Don't forget your umbrella today!";
+  } if (weatherData.data.weather[0].main === "Snow") {
+    document.querySelector("#suggestion").innerHTML = "Suggestion: Don't forget your shovel today!";
+  } if (weatherData.data.weather[0].main === "Haze" || weatherData.data.weather[0].main === "Tornado") {
+    document.querySelector("#suggestion").innerHTML = "Suggestion: Be safe out there!";
   } else {
     document.querySelector("#suggestion").innerHTML = "Suggestion: Enjoy the day!";
   } 
@@ -133,11 +148,15 @@ function showCurrentCityWeather(weatherData) {
   document.querySelector("#weatherIcon").setAttribute("src", `https://openweathermap.org/img/wn/${weatherData.data.weather[0].icon}.png`);
   document.querySelector("#weatherIcon").setAttribute("alt", weatherData.data.weather[0].description);
   document.querySelector(".weatherDesc").innerHTML = weatherData.data.weather[0].description;
-  if (weatherData.data.weather[0].main === "Rain") {
+  if (weatherData.data.weather[0].main === "Rain" || weatherData.data.weather[0].main === "Thunderstorm" || weatherData.data.weather[0].main === "Drizzle") {
     document.querySelector("#suggestion").innerHTML = "Suggestion: Don't forget your umbrella today!";
+  } if (weatherData.data.weather[0].main === "Snow") {
+    document.querySelector("#suggestion").innerHTML = "Suggestion: Don't forget your shovel today!";
+  } if (weatherData.data.weather[0].main === "Haze" || weatherData.data.weather[0].main === "Tornado") {
+    document.querySelector("#suggestion").innerHTML = "Suggestion: Be safe out there!";
   } else {
     document.querySelector("#suggestion").innerHTML = "Suggestion: Enjoy the day!";
-  }
+  } 
 
   getForecast(weatherData.data.coord);
 
@@ -231,16 +250,81 @@ function displayForecast(response) {
      forecast.innerHTML = forecastHTML;
 }
 
+//Favorites - Using Existing showNewWeatherConditions function Above
 
-//Global Variables
-let apiKey = "c6f246d160dbacfbf41c2c13d3cb1b49";
-let units = "imperial";
-let shortenedDays = [
-  "Sun",
-  "Mon",
-  "Tue",
-  "Wed",
-  "Thu",
-  "Fri",
-  "Sat"
-];
+function favoriteCity1Update(event) {
+  event.preventDefault();
+  favCityInfoUpdate("#favorite1")
+}
+
+function favoriteCity2Update(event) {
+  event.preventDefault();
+  favCityInfoUpdate("#favorite2")
+}
+
+function favoriteCity3Update(event) {
+  event.preventDefault();
+  favCityInfoUpdate("#favorite3")
+}
+
+function favCityInfoUpdate(favoriteId) {
+  document.querySelector(".city").innerHTML = document.querySelector(favoriteId).innerHTML;
+  
+  now = new Date();
+
+  day = days[now.getDay()];
+  month = months[now.getMonth()];
+  date = now.getDate();
+  hour = now.getHours();
+  min = now.getMinutes();
+
+  if (min < 10) {
+    min = "0" + min;
+  } else {
+    min = min;
+  }
+
+  if (hour > 12) {
+    hour = hour-12;
+    let time = `${hour}:${min}pm`;
+    let dateTimeDisplay = document.querySelector(".dateTime");
+    dateTimeDisplay.innerHTML = `${day}, ${month} ${date} ${time}`;
+  } else {
+    let time = `${hour}:${min}am`;
+    let dateTimeDisplay = document.querySelector(".dateTime");
+    dateTimeDisplay.innerHTML = ` ${day}, ${month} ${date} ${time}`;
+  }
+}
+
+function favoriteCity1WeatherData(event) {
+  event.preventDefault();
+  favCityWeatherInfo("#favorite1")
+}
+
+function favoriteCity2WeatherData(event) {
+  event.preventDefault();
+  favCityWeatherInfo("#favorite2")
+}
+
+function favoriteCity3WeatherData(event) {
+  event.preventDefault();
+  favCityWeatherInfo("#favorite3")
+}
+
+function favCityWeatherInfo(favoriteId) {
+  let newCityName = document.querySelector(favoriteId).innerHTML;
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${newCityName}&appid=${apiKey}&units=${units}`;
+  axios.get(apiUrl).then(showNewWeatherConditions);
+}
+
+let favoriteCity1 = document.querySelector("#favorite1");
+favoriteCity1.addEventListener("click", favoriteCity1Update);
+favoriteCity1.addEventListener("click", favoriteCity1WeatherData);
+
+let favoriteCity2 = document.querySelector("#favorite2");
+favoriteCity2.addEventListener("click", favoriteCity2Update);
+favoriteCity2.addEventListener("click", favoriteCity2WeatherData);
+
+let favoriteCity3 = document.querySelector("#favorite3");
+favoriteCity3.addEventListener("click", favoriteCity3Update);
+favoriteCity3.addEventListener("click", favoriteCity3WeatherData);

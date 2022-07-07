@@ -45,6 +45,10 @@ body {
     font-weight: bold;
 }
 
+#favorite1, #favorite2, #favorite3 {
+    color: rgb(29, 119, 192);
+}
+
 .col-2,
 .col-3 {
     color: rgb(29, 119, 192);
