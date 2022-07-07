@@ -122,22 +122,21 @@ a:link {
     text-align: center;
 }
 
-.emoji {
-    font-size: 40px;
+
+.forecastDate {
+    color: black;
+    font-size: 16px;
     text-align: center;
-    color: black;
 }
 
-.highsLowsTitle {
-    color: black;
-    font-size: 14px;
-    text-align: left;
-}
-
-.highsLows {
+.forecastTemp {
     color: black;
     font-size: 14px;
     text-align: center;
+}
+
+.forecastTempMin {
+    opacity: 0.6;
 }
 
 .subtext {

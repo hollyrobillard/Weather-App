@@ -103,6 +103,7 @@ function showNewWeatherConditions(weatherData) {
   } else {
     document.querySelector("#suggestion").innerHTML = "Suggestion: Enjoy the day!";
   } 
+  displayForecast();
 }
 
 let newCity = document.querySelector("#city-search");
@@ -141,6 +142,8 @@ function showCurrentCityWeather(weatherData) {
   } else {
     document.querySelector("#suggestion").innerHTML = "Suggestion: Enjoy the day!";
   }
+
+  displayForecast();
 
   now = new Date();
   day = days[now.getDay()];
@@ -193,3 +196,28 @@ let celcius = document.querySelector("#celcius");
 let fahrenheitTemp = null;
 fahrenheit.addEventListener("click", switchToFahrenheit);
 celcius.addEventListener("click", switchToCelcius);
+
+
+//Forecast
+function displayForecast() {
+  let forecast = document.querySelector("#forecast");
+  
+  let forecastHTML = `<div class="row">`;
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
+
+  days.forEach(function(day) {
+    forecastHTML =  forecastHTML + `
+        <div class="col-2">
+          <div class = "forecastDate">${day}</div>
+          <img src = "https://openweathermap.org/img/wn/10n.png" alt="" width="42"/>
+          <div class="forecastTemp">
+            <span class="forecastTempMax"> 60° </span>
+            <span class="forecastTempMin"> 50° </span>
+          </div>
+        </div>
+      `;
+  })
+
+     forecastHTML = forecastHTML + `</div>`
+     forecast.innerHTML = forecastHTML;
+}
