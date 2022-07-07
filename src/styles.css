@@ -85,6 +85,11 @@ hr {
     left: -5px;
 }
 
+#fahrenheit:hover, #celcius:hover {
+    text-decoration: none;
+    color: rgb(23, 172, 147);
+}
+
 a:link {
     color: rgb(29, 119, 192);
 }

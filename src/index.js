@@ -55,39 +55,13 @@ function cityUpdate(event) {
   event.preventDefault();
   document.querySelector(".city").innerHTML = document.querySelector("#cityName").value;
   
-  let now = new Date();
+  now = new Date();
+  day = days[now.getDay()];
+  lmonth = months[now.getMonth()];
 
-  let days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday"
-  ];
-  let day = days[now.getDay()];
-
-  let months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
-  ];
-  let month = months[now.getMonth()];
-
-  let date = now.getDate();
-  let hour = now.getHours();
-  let min = now.getMinutes();
-  let time = "";
+  date = now.getDate();
+  hour = now.getHours();
+  min = now.getMinutes();
 
   if (min < 10) {
     min = "0" + min;
@@ -118,6 +92,7 @@ function cityWeatherData(event) {
 
 function showNewWeatherConditions(weatherData) {
   document.querySelector("#currentTemp").innerHTML = Math.round(weatherData.data.main.temp);
+  fahrenheitTemp = weatherData.data.main.temp;
   document.querySelector("#currentWind").innerHTML = Math.round(weatherData.data.wind.speed);
   document.querySelector("#currentHumidity").innerHTML = weatherData.data.main.humidity;
   document.querySelector("#weatherIcon").setAttribute("src", `https://openweathermap.org/img/wn/${weatherData.data.weather[0].icon}.png`);
@@ -154,6 +129,7 @@ function currentCityWeatherData(position) {
 function showCurrentCityWeather(weatherData) {
   document.querySelector(".city").innerHTML = weatherData.data.name;
   document.querySelector("#currentTemp").innerHTML = Math.round(weatherData.data.main.temp);
+  fahrenheitTemp = weatherData.data.main.temp;
   document.querySelector("#currentWind").innerHTML = Math.round(weatherData.data.wind.speed);
   document.querySelector("#currentHumidity").innerHTML = weatherData.data.main.humidity;
   document.querySelector("#weatherIcon").setAttribute("src", `https://openweathermap.org/img/wn/${weatherData.data.weather[0].icon}.png`);
@@ -164,39 +140,13 @@ function showCurrentCityWeather(weatherData) {
     document.querySelector("#suggestion").innerHTML = "Suggestion: Enjoy the day!";
   }
 
-  let now = new Date();
+  now = new Date();
+  day = days[now.getDay()];
+  month = months[now.getMonth()];
 
-  let days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday"
-  ];
-  let day = days[now.getDay()];
-
-  let months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
-  ];
-  let month = months[now.getMonth()];
-
-  let date = now.getDate();
-  let hour = now.getHours();
-  let min = now.getMinutes();
-  let time = "";
+  date = now.getDate();
+  hour = now.getHours();
+  min = now.getMinutes();
 
   if (min < 10) {
     min = "0" + min;
@@ -224,22 +174,20 @@ refreshCurrentCity.addEventListener("click", currentGeolocation);
 
 
 //Fahrenheight Celcius Switch
-function switchToCelcius(event, weatherData) {
+function switchToCelcius(event) {
   event.preventDefault();
-  let temperature = document.querySelector("#currentTemp").innerHTML;
-  temperature = Number(temperature);
-  temperature = Math.round(((temperature - 32) * 5) / 9);
-  console.log(temperature)
+  let temperature = document.querySelector("#currentTemp");
+  temperature.innerHTML =  Math.round((( fahrenheitTemp - 32) * 5) / 9);
 }
 
-function switchToFahrenheit(event, weatherData) {
+function switchToFahrenheit(event) {
   event.preventDefault();
-  document.querySelector("#currentTemp").innerHTML = Math.round(
-    weatherData.data.main.temp
-  );
+  let temperature = document.querySelector("#currentTemp");
+  temperature.innerHTML = Math.round(fahrenheitTemp);
 }
 
 let fahrenheit = document.querySelector("#fahrenheit");
 let celcius = document.querySelector("#celcius");
-fahrenheit.addEventListener("click", switchToCelcius);
-celcius.addEventListener("click", switchToFahrenheit);
+let fahrenheitTemp = null;
+fahrenheit.addEventListener("click", switchToFahrenheit);
+celcius.addEventListener("click", switchToCelcius);
